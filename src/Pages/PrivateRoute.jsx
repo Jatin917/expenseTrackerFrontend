@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import { authentication } from '../store/Atom/authentication';
+import { useRecoilValue } from 'recoil';
 
 const PrivateRoute = ({Component}) => {
-    // const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("token"));
-    const isAuthenticated = true;
+    const authenticValue = useRecoilValue(authentication);
+    const { isAuthenticated } = authenticValue;
+    console.log("isAutheticated private route",authenticValue.isAuthenticated)
     return (<>
         {
             !isAuthenticated ? <Navigate to="/signup" /> : <Component />

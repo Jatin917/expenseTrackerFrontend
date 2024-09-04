@@ -1,24 +1,44 @@
 import { atom, selector } from "recoil";
-import jwt from 'jsonwebtoken'
 import axios from "axios";
 
-export const authentication = selector({
+
+export const authenticToken = atom({
+    key: 'authenticToken',
+    default:localStorage.getItem("token") || null
+})
+
+export const authentication = atom({
     key:"authentication",
-    get: () =>{
-        const token = localStorage.getItem("token");
-        if(!token) return false;
-        try {
-            const key = import.meta.env.VITE_REACT_APP_JWT_SECRET_KEY;
-            console.log(key, token);
-            const decoded = jwt.verify(token, key);
-            console.log(decoded);
-            if(decoded) return true;
-            return false;
-        } catch (error) {
-            console.log('token verification failed ', error.message);
-        }
-    }
+    default:{isAuthenticated:false, firstName:""}
 });
+// export const authentication = selector({
+//     key:"authentication",
+//     get: async ({get}) =>{
+//         const token = get(authToken);
+//         if(!token) return {
+//             isAuthenticated:false,
+//             firstName:""
+//         };
+//         try {
+//             const response = await axios.get("http://localhost:8000/app/v1/user/verify", {
+//                 headers:{
+//                     Authorization:"Bearer "+ token
+//                 }
+//             });
+//             console.log(response);
+//             if(response.status===200) return {
+//                 isAuthenticated:true,
+//                 firstName:response.data.firstName,
+//             }
+//             return {
+//                 isAuthenticated:false,
+//                 firstName:""
+//             };
+//         } catch (error) {
+//             console.log('token verification failed ', error.message);
+//         }
+//     }
+// });
 
 export const Loading = atom({
     key:"loading",

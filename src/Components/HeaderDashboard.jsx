@@ -1,12 +1,9 @@
 /* eslint-disable react/prop-types */
 // src/components/Header.js
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import ProfileMenu from './ProfileMenu';
 import MonthlyExpenseDropdown from './MonthlyExpenseDropdown'
 
-const Header = ({ userFirstName }) => {
+const Header = () => {
   return (
 <header className="flex items-center justify-between p-4 text-gray-800">
   {/* Left Section */}
@@ -15,7 +12,7 @@ const Header = ({ userFirstName }) => {
   </div>
   <MonthlyExpenseDropdown />
   {/* Right Section */}
-  <ProfileMenu userFirstName="Jatin" />
+  <ProfileMenu />
 </header>
 
   );

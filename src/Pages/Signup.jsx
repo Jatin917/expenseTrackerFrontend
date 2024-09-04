@@ -5,16 +5,20 @@ import { Heading } from "../Components/Heading"
 import { InputBox } from "../Components/InputBox"
 import { SubHeading } from "../Components/SubHeading"
 import axios from "axios";
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
+import { authentication } from "../store/Atom/authentication"
+import { useRecoilValue } from "recoil"
 
 export const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setemail] = useState("");
     const [password, setPassword] = useState("");
+    const authenticValue = useRecoilValue(authentication);
+    const {isAuthenticated} = authenticValue;
     const navigate = useNavigate();
 
-    return <div className="bg-slate-300 h-screen flex justify-center">
+    return <>{ isAuthenticated ? <Navigate to='/' /> : <div className="bg-slate-300 h-screen flex justify-center">
     <div className="flex flex-col justify-center">
       <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
         <Heading label={"Sign up"} />
@@ -40,11 +44,12 @@ export const Signup = () => {
               password
             });
             localStorage.setItem("token", response.data.token)
-            navigate("/dashboard")
+            navigate("/")
           }} label={"Sign up"} />
         </div>
         <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
       </div>
     </div>
-  </div>
+  </div> 
+    }</>
 }

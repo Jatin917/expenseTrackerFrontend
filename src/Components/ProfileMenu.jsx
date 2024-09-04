@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { authentication, authenticToken } from '../store/Atom/authentication';
+import { toast } from 'react-toastify';
 
-const ProfileMenu = ({ userFirstName }) => {
+const ProfileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {firstName:userFirstName} = useRecoilValue(authentication);
+  const setAuthToken = useSetRecoilState(authenticToken);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -10,8 +15,10 @@ const ProfileMenu = ({ userFirstName }) => {
   };
 
   const handleLogout = () => {
-    console.log("Logout clicked");
-    // Add your logout functionality here
+    // console.log("Logout clicked");
+    toast.success('Logged out successfully! 👋');
+    localStorage.removeItem("token");
+    setAuthToken(null);
   };
 
   const handleAddItem = () => {
